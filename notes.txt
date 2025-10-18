@@ -1,0 +1,5 @@
+Chessboard:
+- Each square identified by (letter + number)
+- White player's view
+- Columns: a-h
+- Rows: 1-8 

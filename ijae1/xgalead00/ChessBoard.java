@@ -4,8 +4,12 @@ public class ChessBoard {
     //Declaring new array of size rows x columns
     static Piece[][] ChessBoard = new Piece[8][8]; 
     static Scanner scn = new Scanner(System.in);
+    static boolean checkmate = false;
+    
+    
 
     static void PrintChessboard() {  
+        System.out.println(); // new line between previous turn
         int rows = 8;                         
         int columns = 8;
         //Declaring new array of size rows x columns
@@ -32,43 +36,84 @@ public class ChessBoard {
             char letter = (char) ('A' + j);
             System.out.print(letter + "  ");
             }
-    }
-    static void BlankSlate() {
-        ChessBoard[7][0] = new Piece(7, 0, Player.WHITE, PieceName.ROOK);
-        ChessBoard[7][1] = new Piece(7, 1, Player.WHITE, PieceName.KNIGHT);
-        ChessBoard[7][2] = new Piece(7, 2, Player.WHITE, PieceName.BISHOP);
+        System.out.println(); // two new lines to give cleaner look
+        System.out.println();
 
     }
-    public static void main(String[] args) {
-        BlankSlate();
-        PrintChessboard();
-        MovePiece();
+
+
+    static void BlankSlate() {
+        // White Pieces
+        ChessBoard[7][0] = new Rook(7, 0, Player.WHITE);
+        ChessBoard[7][1] = new Knight(7, 1, Player.WHITE);
+        ChessBoard[7][2] = new Bishop(7, 2, Player.WHITE);
+        ChessBoard[7][3] = new Queen(7, 3, Player.WHITE);
+        ChessBoard[7][4] = new King(7, 4, Player.WHITE);
+        ChessBoard[7][5] = new Bishop(7, 5, Player.WHITE);
+        ChessBoard[7][6] = new Knight(7, 6, Player.WHITE);
+        ChessBoard[7][7] = new Rook(7, 7, Player.WHITE);
+
+        // simple loop to print the pawns
+        for (int i = 0; i < 8; i++) {
+            ChessBoard[6][i] = new Bishop(6, i, Player.WHITE); //for now this is a bishop for testing of bishop assignment
+        }
+
+        // Black Pieces
+        ChessBoard[0][0] = new Rook(0, 0, Player.BLACK);
+        ChessBoard[0][1] = new Knight(0, 1, Player.BLACK);
+        ChessBoard[0][2] = new Bishop(0, 2, Player.BLACK);
+        ChessBoard[0][3] = new Queen(0, 3, Player.BLACK);
+        ChessBoard[0][4] = new King(0, 4, Player.BLACK);
+        ChessBoard[0][5] = new Bishop(0, 5, Player.BLACK);
+        ChessBoard[0][6] = new Knight(0, 6, Player.BLACK);
+        ChessBoard[0][7] = new Rook(0, 7, Player.BLACK);
+
+        for (int i = 0; i < 8; i++) {
+            ChessBoard[1][i] = new Pawn(1, i, Player.BLACK);
+        }
     }
+   
+
     static void MovePiece() {
 
         //Retrieve Player info
 
         // White or black
-        System.out.print("Enter Player: ");
-        Player player = Player.valueOf(scn.next().toUpperCase());
-         
-        // Type of Piece
-        System.out.print("Enter Piece: ");
-        PieceName piecename = PieceName.valueOf(scn.next().toUpperCase());
-    
-        // Column Location
-        System.out.print("Enter Column: ");
-        char colchar = scn.next().toUpperCase().charAt(0);
-        int col = colchar - 'A';
+        System.out.print("Enter Player, or type Q to Quit: ");
+        String input = scn.nextLine().toUpperCase();
+        if (input.equals("Q")){
+            checkmate = true;
+            return;
+        }
+        Player player;
+        try{
+            player = Player.valueOf(input);
+        } catch (IllegalArgumentException e) {
+            System.out.print("Invalid input. must be White or Black!");
+            return;
+        }
 
-        // Row Location
-        System.out.print("Enter Row: ");
-        int row = 8 - scn.nextInt();
+
+        // Move Input
+        System.out.print("Enter Move (format:c1d3): ");
+        String move = scn.nextLine();
+        if (move.length() != 4 || move.contains(" ")){
+            System.out.println();
+            System.out.print("Invalid input format!");
+            System.out.print(" Make sure there are no spaces or extra characters!");
+            
+            return;
+        }
+
+        //Current Position 
+        String currpos = move.substring(0,2); // first two letters (Current pos)
+        int curcol = Character.toUpperCase(currpos.charAt(0)) - 'A'; // eg: B - A = indx 1 so it will put it at [1] / B
+        int currow = 8 - Character.getNumericValue(currpos.charAt(1));
 
         // Making sure input is valid
         // Check if there is a piece
-        Piece piece = ChessBoard[row][col];
-        if (piece ==null) {
+        Piece piece = ChessBoard[currow][curcol];
+        if (piece == null) {
             System.out.println("No piece at that location!");
             return;
         }
@@ -79,27 +124,35 @@ public class ChessBoard {
             return;
         }
 
-        // Check if piece type is correct
-        if (piece.getpiecename() !=piecename){
-            System.out.println("That is not the correct piece type!");
+        // Next Position
+        String nextpos = move.substring(2,4); // last two letters (destination)
+        int nextcol = Character.toUpperCase(nextpos.charAt(0)) - 'A';
+        int nextrow = 8 - Character.getNumericValue(nextpos.charAt(1));
+
+        // Check if piece at the next position is the same is player's own piece
+        Piece nextpiece = ChessBoard[nextrow][nextcol];
+        if (nextpiece != null) {
+            if (nextpiece.getplayer() == player){
+                System.out.println("Why would you attack your own piece?");
+                return;
+            } else {
+                System.out.println(piece.getplayer() + " " + piece.getpiecename() + " captures " 
+                + nextpiece.getplayer() + " " + nextpiece.getpiecename() 
+                + " at " + nextpos + "!");
+                } 
+        }  
+        //Check rules of the piece 
+        if (!piece.CanMoveTo(nextrow, nextcol, ChessBoard)){
             return;
         }
-        // Destinations
-        System.out.print("Enter destination Column: ");
-        char newcolchar = scn.next().toUpperCase().charAt(0);
-        int newcolnum = newcolchar - 'A';
+ 
+        ChessBoard[nextrow][nextcol] = piece;
+        ChessBoard[currow][curcol] = null;
 
-        System.out.print("Enter destination row: ");
-        int newrow = 8 - scn.nextInt();
-
-        ChessBoard[newrow][newcolnum] = piece;
-        ChessBoard[row][col] = null;
-
-        piece.row = newrow;
-        piece.col = newcolnum;
-        PrintChessboard();
-        }
-    }
+        piece.row = nextrow;
+        piece.col = nextcol;
+        }                    
+}
 
 
 

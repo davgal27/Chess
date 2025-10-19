@@ -13,7 +13,7 @@ enum PieceName {
 }
 
 
-public class Piece {
+public abstract class Piece {
     int col;
     int row; 
     Player player;
@@ -48,7 +48,7 @@ public class Piece {
         String pieceletter = switch(piecename) {
             case PAWN -> "P";
             case ROOK -> "R";
-            case KNIGHT -> "N";
+            case KNIGHT -> "N"; // Can't think of a better name which wont conflict with king, for now this is a temp solution 
             case BISHOP -> "B";
             case QUEEN -> "Q";
             case KING -> "K";
@@ -60,5 +60,8 @@ public class Piece {
     {
         return pieceabbreviation();
     }
+
+    public abstract boolean CanMoveTo(int nextrow, int nextcol, Piece[][] Chessboard);
+
 
 }

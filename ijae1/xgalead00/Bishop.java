@@ -1,3 +1,5 @@
+package ijae1.xgalead00;
+
 public class Bishop extends Piece {
     public Bishop(int row, int col, Player player){
         super(row, col, player, PieceName.BISHOP);

@@ -1,3 +1,5 @@
+package ijae1.xgalead00;
+
 public class Rook extends Piece {
     public Rook(int row, int col, Player player){
         super(row, col, player, PieceName.ROOK);

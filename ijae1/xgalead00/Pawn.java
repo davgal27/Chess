@@ -1,3 +1,5 @@
+package ijae1.xgalead00;
+
 public class Pawn extends Piece {
     public Pawn(int row, int col, Player player){
         super(row, col, player, PieceName.PAWN);

@@ -1,3 +1,4 @@
+package ijae1.xgalead00;
 
 public class Knight extends Piece {
     public Knight(int row, int col, Player player){

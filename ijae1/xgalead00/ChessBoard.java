@@ -1,3 +1,5 @@
+package ijae1.xgalead00;
+
 import java.util.Scanner;
 
 public class ChessBoard {      
@@ -5,8 +7,6 @@ public class ChessBoard {
     static Piece[][] ChessBoard = new Piece[8][8]; 
     static Scanner scn = new Scanner(System.in);
     static boolean checkmate = false;
-    
-    
 
     static void PrintChessboard() {  
         System.out.println(); // new line between previous turn

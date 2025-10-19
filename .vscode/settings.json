@@ -1,5 +1,7 @@
 {
     "editor.quickSuggestions": {
         "other": "off"
-    }
+    },
+    "java.project.sourcePaths": [""]
+
 }

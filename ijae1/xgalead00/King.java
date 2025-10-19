@@ -1,3 +1,5 @@
+package ijae1.xgalead00;
+
 public class King extends Piece{
     public King(int row, int col, Player player){
         super(row, col, player, PieceName.KING);

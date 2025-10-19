@@ -1,3 +1,5 @@
+package ijae1.xgalead00;
+
 enum Player {
     BLACK,
     WHITE

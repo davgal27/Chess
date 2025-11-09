@@ -55,7 +55,7 @@ public class ChessBoard {
 
         // simple loop to print the pawns
         for (int i = 0; i < 8; i++) {
-            ChessBoard[6][i] = new Bishop(6, i, Player.WHITE); //for now this is a bishop for testing of bishop assignment
+            ChessBoard[6][i] = new Bishop(6, i, Player.WHITE); //for now this is a bishop for testing
         }
 
         // Black Pieces
@@ -135,12 +135,17 @@ public class ChessBoard {
             if (nextpiece.getplayer() == player){
                 System.out.println("Why would you attack your own piece?");
                 return;
+            } else if (nextpiece.getpiecename() == PieceName.KING){
+                System.out.println("Checkmate! " + nextpiece.getplayer() + " has lost the game!");
+                checkmate = true; 
+                return;
             } else {
                 System.out.println(piece.getplayer() + " " + piece.getpiecename() + " captures " 
                 + nextpiece.getplayer() + " " + nextpiece.getpiecename() 
                 + " at " + nextpos + "!");
-                } 
-        }  
+            }
+        }
+
         //Check rules of the piece 
         if (!piece.CanMoveTo(nextrow, nextcol, ChessBoard)){
             return;
@@ -153,6 +158,7 @@ public class ChessBoard {
         piece.col = nextcol;
         }                    
 }
+
 
 
 

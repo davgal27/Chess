@@ -13,26 +13,23 @@ public class Bishop extends Piece {
             System.out.print("Invalid move!, Bishop can only move Diagonally");
             return false;
         }
-
-        // Check for obstructions
-        int rowstep = (nextrow > row) ? 1 : -1;
-        int colstep = (nextcol > col) ? 1: -1;
+        
+        // Calculate steps
+        int rowstep = Integer.compare(nextrow, row);
+        int colstep = Integer.compare(nextcol, col);
 
         int currentrow = rowstep + row;
         int currentcol = colstep + col;
 
+        // Check for obstructions
         while (currentrow != nextrow && currentcol != nextcol){
             if (ChessBoard[currentrow][currentcol] != null) {
                 System.out.print("Obstruction! Illegal move for Bishop!");
                 return false;
             }
-
-            
             currentrow += rowstep;
             currentcol += colstep;
         }
-
         return true;
     }
-
 }

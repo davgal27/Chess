@@ -22,7 +22,7 @@ public class Bishop extends Piece {
         int currentcol = colstep + col;
 
         // Check for obstructions
-        while (currentrow != nextrow && currentcol != nextcol){
+        while (currentrow != nextrow || currentcol != nextcol){
             if (ChessBoard[currentrow][currentcol] != null) {
                 System.out.print("Obstruction! Illegal move for Bishop!");
                 return false;

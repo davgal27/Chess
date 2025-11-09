@@ -8,7 +8,7 @@ public class Pawn extends Piece {
     @Override
     
     public boolean CanMoveTo(int nextrow, int nextcol, Piece[][] ChessBoard) {
-        System.out.print("For now, the Pawn is out of order, please try a bishop!");
+        System.out.print("For now, the Pawn is out of order, please try a bishop, queen, rook, or king!");
         return false;
     }
 }

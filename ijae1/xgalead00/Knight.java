@@ -8,7 +8,7 @@ public class Knight extends Piece {
     @Override
     
     public boolean CanMoveTo(int nextrow, int nextcol, Piece[][] ChessBoard) {
-        System.out.print("For now, the knight is out of order, please try a bishop!");
+        System.out.print("For now, the knight is out of order, please try a bishop, queen, rook, or king!");
         return false;
     }    
 }

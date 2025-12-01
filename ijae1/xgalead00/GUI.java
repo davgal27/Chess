@@ -10,6 +10,7 @@ public class GUI extends JFrame{
 	private JLabel[][] squares = new JLabel[8][8]; // individual squares on the board 
 	private JTextField InputField; // where the user will type commands 
 	private JButton move_button, exit_button; // buttons to execute commands and to exit the paplication
+	private JLabel turn; // Shows current player turn 
 
 	private Player current_player = Player.WHITE; // initialize first player as white so then the turns are alternating 
 
@@ -35,6 +36,12 @@ public class GUI extends JFrame{
 			}
 		}
 
+		// turn label 
+		turn = new JLabel("Turn: WHITE", SwingConstants.CENTER);
+		add(turnLabel, BorderLayout.NORTH);
+
+
+		//interaction area 
 		JPanel InteractionPanel = new JPanel();
 		InputField = new JTextField(5); // input field for commands for moves 
 		move_button = new JButton("Move"); // move button
@@ -47,6 +54,7 @@ public class GUI extends JFrame{
 			}
 			ChessBoard.MovePiece(move, current_player); //calls from ChessBoard.java to move the piece
 			current_player = (current_player == Player.WHITE) ? Player.BLACK : Player.WHITE; // alternate the players
+			turn.setText("Turn: " + current_player); // update turn label at the top
 
 			// update visual board 
 	        for(int i = 0; i < rows; i++) { 

@@ -137,14 +137,6 @@ public class ChessBoard { // Class which represents state and logic of the chess
             return false;
         }
 
-
-        //Move the piece
-        ChessBoard[nextrow][nextcol] = piece;
-        ChessBoard[currow][curcol] = null;
-
-        piece.row = nextrow;
-        piece.col = nextcol;
-
         if (nextpiece != null) {
             if (nextpiece.getplayer() == player){
                 JOptionPane.showMessageDialog(null, "Why would you attack your own piece?");
@@ -159,6 +151,13 @@ public class ChessBoard { // Class which represents state and logic of the chess
                 + " at " + nextpos + "!");
             }
         }
+        
+        //Move the piece
+        ChessBoard[nextrow][nextcol] = piece;
+        ChessBoard[currow][curcol] = null;
+
+        piece.row = nextrow;
+        piece.col = nextcol;
 
         return true;
  

@@ -74,36 +74,37 @@ public class ChessBoard {
     }
    
 
-    static void MovePiece() {
+    static void MovePiece(String move_input, Player player) {
 
         //Retrieve Player info
 
         // White or black
-        System.out.print("Enter Player, or type Q to Quit: ");
-        String input = scn.nextLine().toUpperCase();
-        if (input.equals("Q")){
-            checkmate = true;
-            return;
-        }
-        Player player;
-        try{
-            player = Player.valueOf(input);
-        } catch (IllegalArgumentException e) {
-            System.out.print("Invalid input. must be White or Black!");
-            return;
-        }
+        // System.out.print("Enter Player, or type Q to Quit: ");
+        // String input = scn.nextLine().toUpperCase();
+        // if (input.equals("Q")){
+        //     checkmate = true;
+        //     return;
+        // }
+        // Player player;
+        // try{
+        //     player = Player.valueOf(input);
+        // } catch (IllegalArgumentException e) {
+        //     JOptionPane.showMessageDialog(null, "Invalid input. must be White or Black!");
+        //     return;
+        // }
 
 
         // Move Input
-        System.out.print("Enter Move (format:c1d3): ");
-        String move = scn.nextLine();
-        if (move.length() != 4 || move.contains(" ")){
+        // System.out.print("Enter Move (format:c1d3): ");
+        // String move = scn.nextLine();
+
+        if (move_input.length() != 4 || move_input.contains(" ")){
             JOptionPane.showMessageDialog(null, "Invalid input format! Make sure there are no spaces or extra characters.");            
             return;
         }
 
         //Current Position 
-        String currpos = move.substring(0,2); // first two letters (Current pos)
+        String currpos = move_input.substring(0,2); // first two letters (Current pos)
         int curcol = Character.toUpperCase(currpos.charAt(0)) - 'A'; // eg: B - A = indx 1 so it will put it at [1] / B
         int currow = 8 - Character.getNumericValue(currpos.charAt(1));
 
@@ -122,7 +123,7 @@ public class ChessBoard {
         }
 
         // Next Position
-        String nextpos = move.substring(2,4); // last two letters (destination)
+        String nextpos = move_input.substring(2,4); // last two letters (destination)
         int nextcol = Character.toUpperCase(nextpos.charAt(0)) - 'A';
         int nextrow = 8 - Character.getNumericValue(nextpos.charAt(1));
 
@@ -157,8 +158,6 @@ public class ChessBoard {
 
         piece.row = nextrow;
         piece.col = nextcol;
-
-        notifyObservers();
     }                    
 }
 

@@ -1,4 +1,5 @@
 package ijae1.xgalead00;
+import javax.swing.JOptionPane;
 
 public class Pawn extends Piece {
     public Pawn(int row, int col, Player player){
@@ -29,13 +30,13 @@ public class Pawn extends Piece {
 
         // no sideways movement
         if (nextrow - row == 0){
-            System.out.print("Illegal move for pawn!, Pawn can not move sideways!");
+            JOptionPane.showMessageDialog(null, "Illegal move for pawn!, Pawn can not move sideways!");
             return false;        
         }
         
         // no backward movement
         if ((nextrow - row) / direction <= 0){
-            System.out.print("Illegal move for pawn!, Pawn can not move backwards!");
+            JOptionPane.showMessageDialog(null, "Illegal move for pawn!, Pawn can not move backwards!");
             return false;
         }
 
@@ -65,7 +66,7 @@ public class Pawn extends Piece {
                 // Check for obstructions
                 while (currentrow != nextrow || currentcol != nextcol){
                     if (ChessBoard[currentrow][currentcol] != null) {
-                        System.out.print("Obstruction! Illegal move for Pawn!");
+                        JOptionPane.showMessageDialog(null, "Obstruction! Illegal move for Pawn!");
                         return false;
                     }
                     currentrow += rowstep;
@@ -80,17 +81,17 @@ public class Pawn extends Piece {
                 if (ChessBoard[nextrow][nextcol] == null){
                 return true;
                 } else {
-                    System.out.print("Illegal capture! Pawn can only capture pieces diagonally!");
+                    JOptionPane.showMessageDialog(null, "Illegal capture! Pawn can only capture pieces diagonally!");
                     return false;
                 }    
             } else {
-                System.out.print("Illegal forward move for pawn! Can only move 1 square forward if not on starting row.");
+                JOptionPane.showMessageDialog(null, "Illegal forward move for pawn! Can only move 1 square forward if not on starting row.");
                 return false;
             }
         }
 
         // if none of the rules are followed, return false
-        System.out.print("Illegal move for pawn!");
+        JOptionPane.showMessageDialog(null, "Illegal move for pawn!");
         return false; 
 
     }

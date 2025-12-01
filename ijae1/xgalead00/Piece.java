@@ -1,4 +1,5 @@
 package ijae1.xgalead00;
+import javax.swing.JOptionPane;
 
 enum Player {
     BLACK,

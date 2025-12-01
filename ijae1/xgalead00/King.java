@@ -1,4 +1,5 @@
 package ijae1.xgalead00;
+import javax.swing.JOptionPane;
 
 public class King extends Piece{
     public King(int row, int col, Player player){
@@ -13,7 +14,7 @@ public class King extends Piece{
         ((Math.abs(row - nextrow) == 0 && Math.abs(col - nextcol) != 0) || // ensures horizontal
         (Math.abs(row - nextrow) != 0 && Math.abs(col - nextcol) == 0))) || // ensures vertical 
         (Math.abs(row - nextrow) > 1 || Math.abs(col - nextcol) > 1))  { // ensures one square
-            System.out.print("Illegal Move for King! King can only move diagonally, horizontally, or vertically for one square!");
+            JOptionPane.showMessageDialog(null, "Illegal Move for King! King can only move diagonally, horizontally, or vertically for one square!");
             return false;
         }
         // Calculate steps
@@ -26,7 +27,7 @@ public class King extends Piece{
         // Check for obstructions
         while (currentrow != nextrow || currentcol != nextcol){
             if (ChessBoard[currentrow][currentcol] != null) {
-                System.out.print("Obstruction! Illegal move for King!");
+                JOptionPane.showMessageDialog(null, "Obstruction! Illegal move for King!");
                 return false;
             }
             currentrow += rowstep;

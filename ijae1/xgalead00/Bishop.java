@@ -1,4 +1,5 @@
 package ijae1.xgalead00;
+import javax.swing.JOptionPane;
 
 public class Bishop extends Piece {
     public Bishop(int row, int col, Player player){
@@ -10,7 +11,7 @@ public class Bishop extends Piece {
     public boolean CanMoveTo(int nextrow, int nextcol, Piece[][] ChessBoard) {
         // Check for diagonal movement
         if(Math.abs(row - nextrow) != Math.abs(col - nextcol)){
-            System.out.print("Invalid move!, Bishop can only move Diagonally");
+            JOptionPane.showMessageDialog(null, "Invalid move!, Bishop can only move Diagonally");
             return false;
         }
         
@@ -24,7 +25,7 @@ public class Bishop extends Piece {
         // Check for obstructions
         while (currentrow != nextrow || currentcol != nextcol){
             if (ChessBoard[currentrow][currentcol] != null) {
-                System.out.print("Obstruction! Illegal move for Bishop!");
+                JOptionPane.showMessageDialog(null, "Obstruction! Illegal move for Bishop!");
                 return false;
             }
             currentrow += rowstep;

@@ -131,12 +131,16 @@ public class ChessBoard {
 
         // Check if piece at the next position is the same is player's own piece
         Piece nextpiece = ChessBoard[nextrow][nextcol];
+        // First check if the move is legal
+        if (!piece.CanMoveTo(nextrow, nextcol, ChessBoard)) {
+            return;
+        }
         if (nextpiece != null) {
             if (nextpiece.getplayer() == player){
                 System.out.println("Why would you attack your own piece?");
                 return;
             } else if (nextpiece.getpiecename() == PieceName.KING){
-                System.out.println("Checkmate! " + nextpiece.getplayer() + " has lost the game!");
+                System.out.println("Checkmate! " + piece.getplayer() + " has won the game!");
                 checkmate = true; 
                 return;
             } else {

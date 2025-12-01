@@ -55,7 +55,7 @@ public class ChessBoard {
 
         // simple loop to print the pawns
         for (int i = 0; i < 8; i++) {
-            ChessBoard[6][i] = new Bishop(6, i, Player.WHITE); //for now this is a bishop for testing
+            ChessBoard[6][i] = new Pawn(6, i, Player.WHITE); 
         }
 
         // Black Pieces

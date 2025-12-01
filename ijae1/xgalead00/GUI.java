@@ -14,6 +14,21 @@ public class GUI extends JFrame{
 
 	private Player current_player = Player.WHITE; // initialize first player as white so then the turns are alternating 
 
+	private ImageIcon GetPieceIcon(Piece piece) {
+		if (piece == null) return null;
+		String color = (piece.getplayer() == Player.WHITE) ? "w" : "b";
+		String name = switch(piece.getpiecename()) {
+			case PAWN -> "pawn";
+	        case ROOK -> "rook";
+	        case KNIGHT -> "knight";
+	        case BISHOP -> "bishop";
+	        case QUEEN -> "queen";
+	        case KING -> "king";
+		};
+		String path = "/ijae1/xgalead00/images/" + color + "_" + name + ".png";
+		return new ImageIcon(getClass().getResource(path));
+	}
+
 
 	public GUI() {
 		setTitle("Chess"); //window
@@ -38,7 +53,7 @@ public class GUI extends JFrame{
 
 		// turn label 
 		turn = new JLabel("Turn: WHITE", SwingConstants.CENTER);
-		add(turnLabel, BorderLayout.NORTH);
+		add(turn, BorderLayout.NORTH);
 
 
 		//interaction area 
@@ -59,14 +74,16 @@ public class GUI extends JFrame{
 			// update visual board 
 	        for(int i = 0; i < rows; i++) { 
 	            for (int j = 0; j < columns; j++) {
-	            	if (ChessBoard.ChessBoard[i][j] != null){
-	            		squares[i][j].setText(ChessBoard.ChessBoard[i][j].toString());
-	            		squares[i][j].setForeground(
-	            			ChessBoard.ChessBoard[i][j].getplayer() == Player.WHITE ? Color.WHITE : Color.BLACK
-	            	);
-	            	} else {
-	            		squares[i][j].setText("");
-	            	}
+	            	squares[i][j].setIcon(GetPieceIcon(ChessBoard.ChessBoard[i][j]));
+	            	squares[i][j].setText("");
+	            	// if (ChessBoard.ChessBoard[i][j] != null){
+	            	// 	squares[i][j].setText(ChessBoard.ChessBoard[i][j].toString());
+	            	// 	squares[i][j].setForeground(
+	            	// 		ChessBoard.ChessBoard[i][j].getplayer() == Player.WHITE ? Color.WHITE : Color.BLACK
+	            	// );
+	            	// } else {
+	            	// 	squares[i][j].setText("");
+	            	// }
 	            	
 	            }
 	        }
@@ -89,15 +106,8 @@ public class GUI extends JFrame{
 		// Initial board printing
 	    for(int i = 0; i < rows; i++) { 
 	        for (int j = 0; j < columns; j++) {
-	            if (ChessBoard.ChessBoard[i][j] != null){
-	            	squares[i][j].setText(ChessBoard.ChessBoard[i][j].toString());
-	            	squares[i][j].setForeground(
-	            		ChessBoard.ChessBoard[i][j].getplayer() == Player.WHITE ? Color.WHITE : Color.BLACK
-	            );
-	            } else {
-	            	squares[i][j].setText("");
-	            }
-	            	
+	            squares[i][j].setIcon(GetPieceIcon(ChessBoard.ChessBoard[i][j]));
+	            squares[i][j].setText("");
 	        }
 	    }    
 	    setSize(1000,1000);

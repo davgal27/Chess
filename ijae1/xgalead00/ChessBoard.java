@@ -4,13 +4,13 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 
-public class ChessBoard {      
+public class ChessBoard { // Class which represents state and logic of the chessboard of the game; handles initalizing and moving pieces. Detects checkmate conditions      
     //Declaring new array of size rows x columns
     static Piece[][] ChessBoard = new Piece[8][8]; 
     static Scanner scn = new Scanner(System.in);
     static boolean checkmate = false;
 
-    static void PrintChessboard() {  
+    static void PrintChessboard() {  // This method is now redundant since switching to a GUI, however the code is kept in case I wish to test things in the terminal again
         System.out.println(); // new line between previous turn
         int rows = 8;                         
         int columns = 8;
@@ -44,7 +44,7 @@ public class ChessBoard {
     }
 
 
-    static void BlankSlate() {
+    static void BlankSlate() { //initalizes the chessboard in the starting position
         // White Pieces
         ChessBoard[7][0] = new Rook(7, 0, Player.WHITE);
         ChessBoard[7][1] = new Knight(7, 1, Player.WHITE);
@@ -76,7 +76,7 @@ public class ChessBoard {
     }
    
 
-    static boolean MovePiece(String move_input, Player player) {
+    static boolean MovePiece(String move_input, Player player) { // This method validates the move format and handles captrue and checkmate detection 
 
         //Retrieve Player info
 
@@ -136,6 +136,15 @@ public class ChessBoard {
         if (!piece.CanMoveTo(nextrow, nextcol, ChessBoard)) {
             return false;
         }
+
+
+        //Move the piece
+        ChessBoard[nextrow][nextcol] = piece;
+        ChessBoard[currow][curcol] = null;
+
+        piece.row = nextrow;
+        piece.col = nextcol;
+
         if (nextpiece != null) {
             if (nextpiece.getplayer() == player){
                 JOptionPane.showMessageDialog(null, "Why would you attack your own piece?");
@@ -151,17 +160,8 @@ public class ChessBoard {
             }
         }
 
-        //Check rules of the piece 
-        if (!piece.CanMoveTo(nextrow, nextcol, ChessBoard)){
-            return false;
-        }
- 
-        ChessBoard[nextrow][nextcol] = piece;
-        ChessBoard[currow][curcol] = null;
-
-        piece.row = nextrow;
-        piece.col = nextcol;
         return true;
+ 
     }                    
 }
 

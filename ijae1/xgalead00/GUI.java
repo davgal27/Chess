@@ -14,6 +14,8 @@ public class GUI extends JFrame{
 
 	private Player current_player = Player.WHITE; // initialize first player as white so then the turns are alternating 
 
+
+	// Helper method for converting piece object into corresponding imported image
 	private ImageIcon GetPieceIcon(Piece piece) {
 		if (piece == null) return null;
 		String color = (piece.getplayer() == Player.WHITE) ? "w" : "b";
@@ -30,7 +32,7 @@ public class GUI extends JFrame{
 	}
 
 
-
+	// Constructor which initializesGUI window and its components 
 	public GUI() {
 		setTitle("Chess"); //window
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //when user closes the window the code stops
@@ -104,11 +106,13 @@ public class GUI extends JFrame{
 				return;
 			}
 			boolean move_success = ChessBoard.MovePiece(move, current_player);
+
 			if (move_success){
 				current_player = (current_player == Player.WHITE) ? Player.BLACK : Player.WHITE; // alternate the players
 				turn.setText("Turn: " + current_player); // update turn label at the top
 
 			}
+
 
 			// update visual board 
 	        for(int i = 0; i < rows; i++) { 
@@ -125,6 +129,13 @@ public class GUI extends JFrame{
 	            	// }
 	            	
 	            }
+	        }
+
+	        // Checkmate handling
+	        if (ChessBoard.checkmate) {
+	        	InputField.setEnabled(false);
+	        	move_button.setEnabled(false);
+	        	turn.setText("Game Over!");
 	        }
 
 	        InputField.setText(""); // clear input after turn 

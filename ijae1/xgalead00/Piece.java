@@ -1,7 +1,7 @@
 package ijae1.xgalead00;
 import javax.swing.JOptionPane;
 
-enum Player {
+enum Player { //two players 
     BLACK,
     WHITE
 }
@@ -15,7 +15,7 @@ enum PieceName {
     KING
 }
 
-
+// Abstract class which allows extension of each specific piece type to extend it and implment its respective movement rules
 public abstract class Piece {
     int col;
     int row; 
@@ -30,6 +30,7 @@ public abstract class Piece {
         this.piecename = piecename;
     }
 
+    // GETTERS 
     public int getcol() {
         return col;
     }
@@ -45,7 +46,7 @@ public abstract class Piece {
     public PieceName getpiecename() {
         return piecename;
     }
-
+    // Method for abbreviating the piece names 
     public String pieceabbreviation() {
         String color = (player == Player.WHITE)? "W" : "B";
         String pieceletter = switch(piecename) {
@@ -63,7 +64,7 @@ public abstract class Piece {
     {
         return pieceabbreviation();
     }
-
+    // Method which handles the movement of logic of the individual pieces, which extend the piece class.
     public abstract boolean CanMoveTo(int nextrow, int nextcol, Piece[][] Chessboard);
 
 

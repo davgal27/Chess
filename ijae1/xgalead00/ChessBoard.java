@@ -98,10 +98,7 @@ public class ChessBoard {
         System.out.print("Enter Move (format:c1d3): ");
         String move = scn.nextLine();
         if (move.length() != 4 || move.contains(" ")){
-            System.out.println();
-            System.out.print("Invalid input format!");
-            System.out.print(" Make sure there are no spaces or extra characters!");
-            
+            JOptionPane.showMessageDialog(null, "Invalid input format! Make sure there are no spaces or extra characters.");            
             return;
         }
 
@@ -114,13 +111,13 @@ public class ChessBoard {
         // Check if there is a piece
         Piece piece = ChessBoard[currow][curcol];
         if (piece == null) {
-            System.out.println("No piece at that location!");
+            JOptionPane.showMessageDialog(null, "No piece at that location!");
             return;
         }
         
         // check if piece belongs to a player
         if (piece.getplayer() !=player){ 
-            System.out.println("That piece does not belong to  " + player + "!");
+            JOptionPane.showMessageDialog(null, "That piece does not belong to  " + player + "!");
             return;
         }
 
@@ -137,14 +134,14 @@ public class ChessBoard {
         }
         if (nextpiece != null) {
             if (nextpiece.getplayer() == player){
-                System.out.println("Why would you attack your own piece?");
+                JOptionPane.showMessageDialog(null, "Why would you attack your own piece?");
                 return;
             } else if (nextpiece.getpiecename() == PieceName.KING){
-                System.out.println("Checkmate! " + piece.getplayer() + " has won the game!");
+                JOptionPane.showMessageDialog(null, "Checkmate! " + piece.getplayer() + " has won the game!");
                 checkmate = true; 
                 return;
             } else {
-                System.out.println(piece.getplayer() + " " + piece.getpiecename() + " captures " 
+                JOptionPane.showMessageDialog(null, piece.getplayer() + " " + piece.getpiecename() + " captures " 
                 + nextpiece.getplayer() + " " + nextpiece.getpiecename() 
                 + " at " + nextpos + "!");
             }
@@ -160,7 +157,9 @@ public class ChessBoard {
 
         piece.row = nextrow;
         piece.col = nextcol;
-        }                    
+
+        notifyObservers();
+    }                    
 }
 
 

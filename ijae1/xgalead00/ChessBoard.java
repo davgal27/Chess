@@ -76,7 +76,7 @@ public class ChessBoard {
     }
    
 
-    static void MovePiece(String move_input, Player player) {
+    static boolean MovePiece(String move_input, Player player) {
 
         //Retrieve Player info
 
@@ -103,7 +103,7 @@ public class ChessBoard {
 
         if (move_input.length() != 4 || move_input.contains(" ")){
             JOptionPane.showMessageDialog(null, "Invalid input format! Make sure there are no spaces or extra characters.");            
-            return;
+            return false;
         }
 
         //Current Position 
@@ -116,13 +116,13 @@ public class ChessBoard {
         Piece piece = ChessBoard[currow][curcol];
         if (piece == null) {
             JOptionPane.showMessageDialog(null, "No piece at that location!");
-            return;
+            return false;
         }
         
         // check if piece belongs to a player
         if (piece.getplayer() !=player){ 
             JOptionPane.showMessageDialog(null, "That piece does not belong to  " + player + "!");
-            return;
+            return false;
         }
 
         // Next Position
@@ -134,16 +134,16 @@ public class ChessBoard {
         Piece nextpiece = ChessBoard[nextrow][nextcol];
         // First check if the move is legal
         if (!piece.CanMoveTo(nextrow, nextcol, ChessBoard)) {
-            return;
+            return false;
         }
         if (nextpiece != null) {
             if (nextpiece.getplayer() == player){
                 JOptionPane.showMessageDialog(null, "Why would you attack your own piece?");
-                return;
+                return false;
             } else if (nextpiece.getpiecename() == PieceName.KING){
                 JOptionPane.showMessageDialog(null, "Checkmate! " + piece.getplayer() + " has won the game!");
                 checkmate = true; 
-                return;
+                return true;
             } else {
                 JOptionPane.showMessageDialog(null, piece.getplayer() + " " + piece.getpiecename() + " captures " 
                 + nextpiece.getplayer() + " " + nextpiece.getpiecename() 
@@ -153,7 +153,7 @@ public class ChessBoard {
 
         //Check rules of the piece 
         if (!piece.CanMoveTo(nextrow, nextcol, ChessBoard)){
-            return;
+            return false;
         }
  
         ChessBoard[nextrow][nextcol] = piece;
@@ -161,6 +161,7 @@ public class ChessBoard {
 
         piece.row = nextrow;
         piece.col = nextcol;
+        return true;
     }                    
 }
 

@@ -30,6 +30,7 @@ public class GUI extends JFrame{
 	}
 
 
+
 	public GUI() {
 		setTitle("Chess"); //window
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //when user closes the window the code stops
@@ -37,7 +38,8 @@ public class GUI extends JFrame{
 
 		ChessBoard.BlankSlate(); // initialize board
 
-		BoardPanel = new JPanel(new GridLayout(8,8));
+		///////// Panel for squares
+		JPanel BoardPanel = new JPanel(new GridLayout(8,8));
         int rows = 8;                         
         int columns = 8;
 
@@ -46,14 +48,48 @@ public class GUI extends JFrame{
             for (int j = 0; j < columns; j++) {
 				squares[i][j] = new JLabel("", SwingConstants.CENTER);
 				squares[i][j].setOpaque(true);
-				squares[i][j].setBackground((i + j) % 2 == 0 ? Color.LIGHT_GRAY : Color.DARK_GRAY); //same logic as for Chessboard.java for printing the black and white 
+				squares[i][j].setBackground((i + j) % 2 == 0 ? new Color(237, 232, 208) : new Color(78,120,55)); //same logic as for Chessboard.java for printing the black and white 
 				BoardPanel.add(squares[i][j]);
 			}
 		}
+		add(BoardPanel, BorderLayout.CENTER);
+
+
+	    ///////////// Column labels panel (A-H)
+		JPanel ColumnPanel = new JPanel(new GridLayout(1, 8));
+		for (int j = 0; j < columns; j++) {
+		    JLabel ColLabel = new JLabel(String.valueOf((char)('A' + j)), SwingConstants.CENTER);
+		    ColumnPanel.add(ColLabel);
+		}
+		add(ColumnPanel, BorderLayout.SOUTH);
+
+
+		///////// Row labels panel (8-1)
+		JPanel RowPanel = new JPanel(new GridLayout(8, 1));
+		for (int i = 0; i < rows; i++) {
+		    JLabel RowLabel = new JLabel(String.valueOf(8 - i), SwingConstants.CENTER);
+		    RowLabel.setPreferredSize(new Dimension(30, 0)); // width 30 pixels
+		    RowPanel.add(RowLabel);
+		}
+		add(RowPanel, BorderLayout.WEST);
+
+		// Wrap board + row labels together
+		JPanel BoardWithRow = new JPanel(new BorderLayout());
+		BoardWithRow.add(RowPanel, BorderLayout.WEST);
+		BoardWithRow.add(BoardPanel, BorderLayout.CENTER);
+
+		// Then add column labels above
+		JPanel FullBoard = new JPanel(new BorderLayout());
+		FullBoard.add(ColumnPanel, BorderLayout.SOUTH);
+		FullBoard.add(BoardWithRow, BorderLayout.CENTER);
+
+		// Add everything to frame
+		add(FullBoard, BorderLayout.CENTER);
 
 		// turn label 
 		turn = new JLabel("Turn: WHITE", SwingConstants.CENTER);
 		add(turn, BorderLayout.NORTH);
+
 
 
 		//interaction area 
@@ -67,9 +103,12 @@ public class GUI extends JFrame{
 			if (move.isEmpty()){
 				return;
 			}
-			ChessBoard.MovePiece(move, current_player); //calls from ChessBoard.java to move the piece
-			current_player = (current_player == Player.WHITE) ? Player.BLACK : Player.WHITE; // alternate the players
-			turn.setText("Turn: " + current_player); // update turn label at the top
+			boolean move_success = ChessBoard.MovePiece(move, current_player);
+			if (move_success){
+				current_player = (current_player == Player.WHITE) ? Player.BLACK : Player.WHITE; // alternate the players
+				turn.setText("Turn: " + current_player); // update turn label at the top
+
+			}
 
 			// update visual board 
 	        for(int i = 0; i < rows; i++) { 
@@ -91,16 +130,16 @@ public class GUI extends JFrame{
 	        InputField.setText(""); // clear input after turn 
 		});
 
-		exit_button.addActionListener(e -> System.exit(0)); // exit button event listener 
+		InputField.addActionListener(e -> move_button.doClick()); // enter clicks the move button 
 
+		exit_button.addActionListener(e -> System.exit(0)); // exit button event listener 
 
 		// Add interaction panel elements to GUI
 		InteractionPanel.add(InputField);
 		InteractionPanel.add(move_button);
 		InteractionPanel.add(exit_button);
 
-		// Add elements to the window
-		add(BoardPanel ,BorderLayout.CENTER);
+		// Add interacion panel to window
 		add(InteractionPanel, BorderLayout.SOUTH); // interaction area near the south of the screen
 
 		// Initial board printing

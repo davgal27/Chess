@@ -1,6 +1,8 @@
 package ijae1.xgalead00;
 
 import java.util.Scanner;
+import javax.swing.JOptionPane;
+
 
 public class ChessBoard {      
     //Declaring new array of size rows x columns
@@ -92,6 +94,7 @@ public class ChessBoard {
         //     JOptionPane.showMessageDialog(null, "Invalid input. must be White or Black!");
         //     return;
         // }
+        // ABOVE IS OLD CODE USED IN TEXT BASED SOLUTION 
 
 
         // Move Input

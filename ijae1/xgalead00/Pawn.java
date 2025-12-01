@@ -89,11 +89,9 @@ public class Pawn extends Piece {
             }
         }
 
-
         // if none of the rules are followed, return false
         System.out.print("Illegal move for pawn!");
         return false; 
-
 
     }
 }
